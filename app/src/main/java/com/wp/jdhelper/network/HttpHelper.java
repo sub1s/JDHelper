@@ -35,12 +35,8 @@ public class HttpHelper {
 
     public static String getRealUrl(String urlString) throws
             IOException {
-//        URL url = new URL("https://u.jd.com/jgxB39");
-        String url = "https://u.jd.com/jgxB39";
-        System.out.println("访问地址:" + url);
-
-        //发送get请求
-        URL serverUrl = new URL(url);
+        System.out.println("访问地址:" + urlString);
+        URL serverUrl = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) serverUrl.openConnection();
         conn.setRequestMethod("GET");
         //必须设置false，否则会自动redirect到重定向后的地址
@@ -74,22 +70,16 @@ public class HttpHelper {
         conn2.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.8) Firefox/3.6.8");
         conn2.connect();
         int code2 = conn2.getResponseCode();
+        String realResult = "123";
         if (code2 == 302) {
             System.out.println("302");
-            String realResult = conn2.getHeaderField("Location");
+            realResult = conn2.getHeaderField("Location");
             System.out.println("realResult: " + realResult);
         } else {
             System.out.println(code2);
             System.out.println(conn2.getURL().getPath());
         }
-//        HttpClient client = new HttpClient();
-//        HttpMethod method = new GetMethod(url);
-//        HttpParams params = client.getParams();
-//        params.setParameter(AllClientPNames.HANDLE_REDIRECTS, false);
-//        client.
-//        String realUrl = method.getURI().getURI();
-//        String result = transStream2String(conn.getInputStream());
-        return "123";
+        return realResult;
     }
 
     private static String transStream2String(InputStream inputStream) throws
